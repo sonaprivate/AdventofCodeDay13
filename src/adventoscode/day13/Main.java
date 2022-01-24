@@ -1,7 +1,7 @@
 package adventoscode.day13;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import java.util.Collections;
 
 public class Main {
 
@@ -20,10 +20,11 @@ public class Main {
 
 
 
-    /* Nytt för mig: 
+    /* Nytt för mig:
+    - lägga in data som en textfil*
     - split;
-    - ? : = if else
-    - permutation
+    - if else kan även skrivas som - ? :
+    - permutation - man kan få ut alla möjliga kombinationer av string (given a string)
 
 
     */
@@ -45,6 +46,21 @@ public class Main {
             people.add(tokens[10]);
             happiness.put(tokens[0] + tokens[10], Integer.parseInt(tokens[3]) * count);
         }
+
+        int max = 0;
+        for (List<String> perm : Collections.permutations(people)) {   // hämtar alla möjliga permutations
+            int sum = 0;
+            for (int i = 0; i < perm.size()-1; i++){
+                sum += happiness.get(perm.get(i) + perm.get(i + 1)) + happiness.get(perm.get(i + 1) + perm.get(i));
+            }
+
+            sum += happiness.get(perm.get(0) + perm.get(perm.size() - 1)) + happiness.get(perm.get(perm.size() -1) + perm.get(0));
+            if (sum > max) {
+                max = sum;
+            }
+
+        }
+        System.out.println("Maximum happines is: " + max);
 
 
     }
